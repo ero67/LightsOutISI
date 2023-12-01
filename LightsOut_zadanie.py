@@ -97,8 +97,8 @@ class LightsOutSolver:
             # pop a state from the stack
             current_state = stack.pop()
             visited.add(tuple(map(tuple, current_state.board)))
-            print("popped from stack")
-            print(current_state)
+            # print("popped from stack")
+            # print(current_state)
             if current_state.is_solved():
                 # set the solved flag to True
                 self.solved = True
@@ -127,8 +127,8 @@ class LightsOutSolver:
                     #print(new_state)
                     # if the copy has not been visited
                     if new_state.is_in_visited(visited) is False:
-                        print("if new_state not in visited:")
-                        print(new_state)
+                        # print("if new_state not in visited:")
+                        # print(new_state)
                         # push the copy to the stack
                         stack.append(new_state)
                         # add the copy to the visited set
