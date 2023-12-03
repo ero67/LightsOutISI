@@ -1,7 +1,8 @@
 import pygame
 import pygame_gui
 import time
-import LightsOut_zadanie
+import DFS_LightsOut
+import GameBoard
 
 # define some colors
 black = (0, 0, 0)
@@ -35,10 +36,10 @@ slider = pygame_gui.elements.UIHorizontalSlider(relative_rect=pygame.Rect((10, 2
 slider_label = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((10, 280), (100, 50)), text="Speed", manager=manager)
 
 # create the initial board
-initial_board = LightsOut_zadanie.GameBoard(2, 4)
+initial_board = GameBoard.GameBoard(2, 4)
 
 # create the solver
-solver = LightsOut_zadanie.LightsOutSolver(initial_board)
+solver = DFS_LightsOut.LightsOutSolver_DFS(initial_board)
 solver.solve_dfs()
 solution = solver.get_moves()
 solution_index = 0
@@ -56,17 +57,18 @@ def draw_board(board, moves, solved):
                 pygame.draw.rect(window, grey, (x, y, rect_width, rect_height))
 
     moves_text = font.render(f"Moves: {moves}", True, white)
-    window.blit(moves_text, (10, 10))
+    window.blit(moves_text, (500, 10))
     if solved:
-        status_text = font.render("Solved!", True, green)
+        status_text = font.render("Solvable!", True, green)
     else:
-        status_text = font.render("Unsolved", True, red)
+        status_text = font.render("Unsolvable", True, red)
     window.blit(status_text, (window_width - status_text.get_width() - 10, 10))
     pygame.display.update()
 
 # define the main loop
 running = True
 clock = pygame.time.Clock()
+pause=True
 while running:
     # get the time delta
     time_delta = clock.tick(60) / 1000.0
@@ -107,3 +109,4 @@ while running:
         # wrap around the solution index
         if solution_index >= len(solution):
             solution_index = 0
+            pause=True

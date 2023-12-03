@@ -1,10 +1,11 @@
 import pygame
 import time
-import LightsOut_zadanie
+import DFS_LightsOut
 import pygame_gui # import pygame_gui
+import GameBoard
 
 # initialize the board
-initial_board = LightsOut_zadanie.GameBoard(2, 4)
+initial_board = GameBoard.GameBoard(2, 4)
 
 pygame.init()
 window_width = 800
@@ -80,7 +81,7 @@ def show_solution():
     global sleep_time # use the global variable for sleep time
     global pause # use the global variable for pause
     running = True
-    solver = LightsOut_zadanie.LightsOutSolver(initial_board)
+    solver = DFS_LightsOut.LightsOutSolver_DFS(initial_board)
     solver.solve_dfs()
     solution = solver.get_moves()
     solution_index = 0
