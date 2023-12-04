@@ -1,6 +1,6 @@
 import pygame
 import time
-import DFS_LightsOut
+import dfsSolver
 import pygame_gui # import pygame_gui
 import GameBoard
 

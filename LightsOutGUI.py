@@ -1,8 +1,9 @@
 import pygame
 import pygame_gui
 import time
-import DFS_LightsOut
+import dfsSolver
 import GameBoard
+import greedySearchpomocuz
 
 # define some colors
 black = (0, 0, 0)
@@ -30,18 +31,34 @@ font = pygame.font.SysFont("Arial", 32)
 manager = pygame_gui.UIManager((window_width, window_height))
 
 # create the GUI elements
-play_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((10, 100), (100, 50)), text="Play", manager=manager)
+play_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((10, 100), (100, 50)), text="Solve", manager=manager)
 pause_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((10, 160), (100, 50)), text="Pause", manager=manager)
 slider = pygame_gui.elements.UIHorizontalSlider(relative_rect=pygame.Rect((10, 220), (100, 50)), start_value=0.5, value_range=(0.1, 1.0), manager=manager)
 slider_label = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((10, 280), (100, 50)), text="Speed", manager=manager)
 
-# create the initial board
-initial_board = GameBoard.GameBoard(2, 4)
+# choose algorithm menu
+# algorithms = ["DFS", "Greedy"]
+# menu = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((10, 10), (100, 50)), options_list=algorithms, starting_option=algorithms[0], manager=manager)
+# selected_algorithm = algorithms[0]
 
-# create the solver
-solver = DFS_LightsOut.LightsOutSolver_DFS(initial_board)
-solver.solve_dfs()
-solution = solver.get_moves()
+
+# create the initial board
+initial_board = GameBoard.GameBoard(3, 3)
+
+
+
+# solver = dfsSolver.LightsOutSolver_DFS(initial_board)
+# solver.solve_dfs()
+
+solver=greedySearchpomocuz.greedySearchSolver(initial_board)
+solver.solve_greedy()
+#DFS
+# solution = solver.get_moves()
+
+
+#Greedy
+solution=solver.get_moves()
+
 solution_index = 0
 
 # define a function to draw the board
@@ -69,6 +86,7 @@ def draw_board(board, moves, solved):
 running = True
 clock = pygame.time.Clock()
 pause=True
+
 while running:
     # get the time delta
     time_delta = clock.tick(60) / 1000.0
@@ -80,12 +98,12 @@ while running:
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == play_button:
-                    pause = False # resume the animation
+                    pause = False  # resume the animation
                 if event.ui_element == pause_button:
-                    pause = True # pause the animation
+                    pause = True  # pause the animation
             if event.user_type == pygame_gui.UI_HORIZONTAL_SLIDER_MOVED:
                 if event.ui_element == slider:
-                    sleep_time = slider.get_current_value() # get the new sleep time from the slider
+                    sleep_time = slider.get_current_value()  # get the new sleep time from the slider
         manager.process_events(event)
 
     # update the GUI
@@ -96,7 +114,7 @@ while running:
 
     # draw the board
     draw_board(solution[solution_index], len(solver.get_moves()), solver.solved)
-
+    # draw_board(greedySolution[greedySolution_index], len(greedySolver.get_moves()), greedySolver.solved)
     # update the display
     pygame.display.update()
 
@@ -110,3 +128,13 @@ while running:
         if solution_index >= len(solution):
             solution_index = 0
             pause=True
+
+    # if not pause:
+    #     # wait for the sleep time
+    #     time.sleep(sleep_time)
+    #     # increment the solution index
+    #     greedySolution_index += 1
+    #     # wrap around the solution index
+    #     if greedySolution_index >= len(greedySolution):
+    #         greedySolution_index = 0
+    #         pause=True
