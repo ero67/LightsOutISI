@@ -4,10 +4,63 @@ import numpy as np
 
 
 class GameBoard:
-    def __init__(self, rows, cols):
+    def __init__(self, rows, cols,boardindex):
+        self.boardindex = boardindex
         self.rows = rows
         self.cols = cols
 
+        if rows == 2 and cols == 3:
+            if self.boardindex==0:
+                self.board = [[True, False, False],
+                            [True, True, False]]
+            elif self.boardindex==1:
+                self.board=[[True,False,True],
+                            [True,False,True]]
+            elif self.boardindex==2:
+                self.board=[[True,True,True],
+                            [True,True,True]]
+            elif self.boardindex==3:
+                self.board=[[False,False,True],
+                            [False,True,True]]
+            elif self.boardindex==4:
+                self.board=[[False,True,False],
+                            [True,True,True]]
+
+
+
+
+        elif rows==5 and cols==5:
+            if self.boardindex == 2:
+                self.board=[[False,True,False,False,False],
+                            [False, False,False, True, False],
+                            [False, True,True,True,False],
+                            [True,False,True,False,False],
+                            [False,False,False,True,False]]
+            elif self.boardindex == 1:
+                self.board=[[True,True,True,True,True],
+                            [False, False,False, True, False],
+                            [False, True,True,True,False],
+                            [True,False,True,False,False],
+                            [False,False,False,True,False]]
+            elif self.boardindex == 0:
+                self.board=[[False,True,False,False,False],
+                            [True,True,True,True,True],
+                            [False, True,True,True,False],
+                            [True,False,True,False,False],
+                            [False,False,False,True,False]]
+            elif self.boardindex == 3:
+                self.board=[[False,True,False,False,False],
+                            [False, False,False, True, False],
+                            [True,True,True,True,True],
+                            [True,False,True,False,False],
+                            [False,False,False,True,False]]
+            elif self.boardindex == 4:
+                self.board=[[False,True,False,False,False],
+                            [False, False,False, True, False],
+                            [False, True,True,True,False],
+                            [True,True,True,True,True],
+                            [False,False,False,True,False]]
+        # if map_index==0:
         # self.board = [[True, True, False, True, True],
         #             [True, False, False, False, True],
         #             [False, False, False, False, False],
@@ -25,18 +78,9 @@ class GameBoard:
         #               [False, True, True, False],
         #               [True, False, False, True]]
 
-        # self.board = [[False, False, False, False],
-        #               [False, False, False, False]]
 
-        # self.board=[[False,True,False,False,False],
-        #             [False, False,False, True, False],
-        #             [False, True,True,True,False],
-        #             [True,False,True,False,False],
-        #             [False,False,False,True,False]]
-        # if map_index==0:
-        self.board=[[True,True,True],
-                    [True,True,True],
-                    [False,False,False]]
+
+
 
         # path to the current state.... for a* algo
         self.path = []
@@ -80,7 +124,7 @@ class GameBoard:
         return True
 
     def create_same_state(self):
-        new_board = GameBoard(self.rows, self.cols)
+        new_board = GameBoard(self.rows, self.cols,self.boardindex)
         for row in range(self.rows):
             for col in range(self.cols):
                 new_board.board[row][col] = self.board[row][col]

@@ -82,7 +82,7 @@ class greedySearchSolver:
         return len(self.moves)
 
 if __name__ == "__main__":
-    initial_state = GameBoard.GameBoard(3, 3)
+    initial_state = GameBoard.GameBoard(3, 3,0)
     # print(initial_state)
     # create a solver object
     solver = greedySearchSolver(initial_state)

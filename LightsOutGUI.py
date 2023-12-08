@@ -32,22 +32,28 @@ font = pygame.font.SysFont("Arial", 32)
 manager = pygame_gui.UIManager((window_width, window_height))
 
 # create the GUI elements
-play_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((10, 100), (100, 50)), text="Solve", manager=manager)
-pause_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((10, 160), (100, 50)), text="Pause", manager=manager)
-slider = pygame_gui.elements.UIHorizontalSlider(relative_rect=pygame.Rect((10, 220), (100, 50)), start_value=0.5, value_range=(1, 0.1), manager=manager)
-slider_label = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((10, 280), (100, 50)), text="Speed", manager=manager)
+play_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((10, 300), (100, 50)), text="Solve", manager=manager)
+pause_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((10, 360), (100, 50)), text="Pause", manager=manager)
+slider = pygame_gui.elements.UIHorizontalSlider(relative_rect=pygame.Rect((10, 420), (100, 50)), start_value=0.5, value_range=(1, 0.1), manager=manager)
+slider_label = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((10, 460), (100, 50)), text="Speed", manager=manager)
 
 # greedybutton=pygame_gui.elements.UIButton(relative_rect=pygame.Rect((10, 340), (100, 50)), text="Greedy", manager=manager)
 # dfsbutton=pygame_gui.elements.UIButton(relative_rect=pygame.Rect((10, 400), (100, 50)), text="DFS", manager=manager)
 
 # choose algorithm menu
 algorithms = ["DFS", "Greedy"]
-dropdown_menu = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((10, 10), (100, 50)), options_list=algorithms, starting_option=algorithms[0], manager=manager)
+dropdown_menu_algorithms = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((10, 100), (100, 50)), options_list=algorithms, starting_option=algorithms[0], manager=manager)
 selected_algorithm = algorithms[0]
 
 
+sizes= ["2x3", "5x5"]
+dropdown_menu_sizes = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((10, 10), (100, 50)), options_list=sizes, starting_option=sizes[0], manager=manager)
+size = sizes[0]
+
+
 # create the initial board
-initial_board = GameBoard.GameBoard(3, 3)
+initial_board = GameBoard.GameBoard(2, 3,1)
+
 
 
 
@@ -94,7 +100,7 @@ def draw_board(board, moves, solved,actual_move):
     # pygame.display.update()
 
 # define the main loop
-running = True
+
 clock = pygame.time.Clock()
 pause=True
 
@@ -102,6 +108,23 @@ pause=True
 #defining if dfs or greedy
 is_dfs=False
 is_greedy=False
+
+running=False
+menu=True
+while menu:
+    time_delta = clock.tick(60) / 1000.0
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            menu = False
+        if event.type == pygame.USEREVENT:
+            if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == play_button:
+                    menu = False
+                    pause = False
+                    running = True
+
+    manager.draw_ui(window)
+
 
 while running:
     # get the time delta
@@ -122,14 +145,13 @@ while running:
                     sleep_time = slider.get_current_value()
             if not is_dfs and not is_greedy:
                 if event.user_type == pygame_gui.UI_DROP_DOWN_MENU_CHANGED:
-                    if event.ui_element == dropdown_menu:
-                        selected_algorithm = dropdown_menu.selected_option
+                    if event.ui_element == dropdown_menu_algorithms:
+                        selected_algorithm = dropdown_menu_algorithms.selected_option
                         if selected_algorithm == "DFS":
                             solution = solver_dfs.get_moves()
                             solution_index = 0
                             is_dfs=True
                             moves = solver_dfs.get_num_moves()
-
                             print("dfs")
                         elif selected_algorithm == "Greedy":
                             solution = solver_greedy.get_moves()
@@ -137,7 +159,10 @@ while running:
                             moves=solver_greedy.get_num_moves()
                             is_greedy=True
                             print("greedy")
-                            manager.update(time_delta)
+                            # manager.update(time_delta)
+                    elif event.ui_element == dropdown_menu_sizes:
+                        size = dropdown_menu_sizes.selected_option
+
 
         manager.process_events(event)
 
