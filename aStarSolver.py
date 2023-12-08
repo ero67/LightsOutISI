@@ -47,7 +47,7 @@ class LightsOutSolver_AStar:
 
     def apply_action(self, state, action):
         # copy the state to avoid modifying the original
-        new_state = state.copy()
+        new_state = state.create_same_state()
         # get the row and column from the action
         row, col = action
         # toggle the light and its neighbors using the toggle_light method

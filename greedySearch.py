@@ -7,7 +7,7 @@ class greedySearchSolver:
         self.board = board
         self.moves = []
         self.solved = False
-
+        self.closedList = set()
     def solve_greedy(self):
         priority_queue = []
         initial_state = self.board
@@ -26,12 +26,13 @@ class greedySearchSolver:
         # popped = heapq.heappop(priority_queue)[1]
         # print(popped)
         moves = []
-        closedList = set()
-        closedList.add(initial_state)
+        # closedList = set()
+        self.closedList.add(initial_state)
         predecessors = {}
         predecessors[initial_state] = None
 
         while len(priority_queue) > 0:
+            # poping the state with the lowest h from the priority queue with index 1 of a tuple bacause the first element is the h
             current_state = heapq.heappop(priority_queue)[1]
             # print("this is priority queue")
             # for item in priority_queue:
@@ -42,7 +43,7 @@ class greedySearchSolver:
             #     print(item)
             # print("this is end if the closed list")
             # print("state with the lowest h in the queue")
-            print(current_state)
+            # print(current_state)
             if current_state.is_solved():
                 self.solved = True
                 self.moves = []
@@ -58,19 +59,20 @@ class greedySearchSolver:
                 #
                 self.moves.reverse()
                 # break out of the loop
-                print("solved")
-                print(current_state)
+                # print("solved")
+                # print(current_state)
+                print(current_state.get_path())
                 break
-            neighbors = current_state.get_neighbors()
-            for neighbor in neighbors:
-                # print("neighbor")
-                # print(neighbor)
-                if neighbor not in closedList:
-                    # print("neighbor not in closed list")
-                    # print(neighbor)
-                    heapq.heappush(priority_queue, (neighbor.get_h(), neighbor))
-                    closedList.add(neighbor)
-                    predecessors[neighbor] = current_state
+            children = current_state.generate_children()
+            for child in children:
+                # print("child")
+                # print(child)
+                if child not in self.closedList:
+                    # print("child not in closed list")
+                    # print(child)
+                    heapq.heappush(priority_queue, (child.get_h(), child))
+                    self.closedList.add(child)
+                    predecessors[child] = current_state
 
             # time.sleep(3)
     def get_moves(self):
@@ -78,6 +80,9 @@ class greedySearchSolver:
 
     def get_num_moves(self):
         return len(self.moves)
+
+    def get_num_expanded_states(self):
+        return len(self.closedList)
 
 
 if __name__ == "__main__":
@@ -87,9 +92,10 @@ if __name__ == "__main__":
     solver = greedySearchSolver(initial_state)
     solver.solve_greedy()
     moves = solver.get_moves()
-    for move in moves:
-        print(move)
-    print("number of moves")
-    print(solver.get_num_moves())
+    print("Number of expanded states:")
+    print(solver.get_num_expanded_states())
+
+
+
 
 

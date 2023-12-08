@@ -33,10 +33,11 @@ class GameBoard:
         #             [False, True,True,True,False],
         #             [True,False,True,False,False],
         #             [False,False,False,True,False]]
-
+        # if map_index==0:
         self.board=[[True,True,True],
                     [True,True,True],
                     [False,False,False]]
+
         # path to the current state.... for a* algo
         self.path = []
 
@@ -62,6 +63,7 @@ class GameBoard:
         self.path.append((row, col))
 
 
+
     def __str__(self):
         result = ""
         for row in self.board:
@@ -77,7 +79,7 @@ class GameBoard:
                     return False
         return True
 
-    def copy(self):
+    def create_same_state(self):
         new_board = GameBoard(self.rows, self.cols)
         for row in range(self.rows):
             for col in range(self.cols):
@@ -94,9 +96,9 @@ class GameBoard:
         else:
             return False
 
-    # function which returns h() function - heuristic
+    # function which returns h() function - heuristic.. in our case its lights that are on
     def get_h(self):
-        # return the number of lights that are on
+
         count = 0
         for row in self.board:
             for light in row:
@@ -104,16 +106,16 @@ class GameBoard:
                     count += 1
         return count
 
-    def get_neighbors(self):
+    def generate_children(self):
         neighbors = []
         for row in range(self.rows):
             for col in range(self.cols):
-                new_state = self.copy()
+                new_state = self.create_same_state()
                 new_state.toggle_light(row, col)
                 neighbors.append(new_state)
         return neighbors
 
-    def get_best_neighbor(self,neighbors):
+    def get_child_w_best_h(self, neighbors):
         # neighbors = self.get_neighbors()
         best_neighbor = neighbors[0]
         for neighbor in neighbors:
@@ -138,20 +140,9 @@ class GameBoard:
     def __hash__(self):
         return hash(str(self.board))
 
-    # def __eq__(self, other):
-    #     # check if the other object is a GameBoard
-    #     if isinstance(other, GameBoard):
-    #         # compare the board matrices of the two objects
-    #         return np.array_equal(self.board, other.board)
-    #     else:
-    #         # return False if the other object is not a GameBoard
-    #         return False
+    def get_path(self):
+        return self.path
 
-    # def __hash__(self):
-    #     # convert the board matrix to a string
-    #     board_string = str(self.board)
-    #     # return the hash value of the string
-    #     return hash(board_string)
 
 
 

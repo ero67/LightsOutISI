@@ -29,8 +29,8 @@ class greedySearchSolver:
         while len(openedList) > 0:
             # heappop returns a item from queue with lowest h() value
             current_board = heapq.heappop(openedList)[1]
-            print("1 iteration of current board")
-            print(current_board)
+            # print("1 iteration of current board")
+            # print(current_board)
             # time.sleep(5)
             if current_board.is_solved():
                 self.solved = True
@@ -46,11 +46,12 @@ class greedySearchSolver:
                 # reverse the moves list
 
                 self.moves.reverse()
+                return current_board.path
                 # break out of the loop
                 break
 
             # get all the neighbors...that means all the child states possible from sthis state
-            neighbors = current_board.get_neighbors()
+            neighbors = current_board.generate_children()
 
             for neighbor in neighbors:
                 # check if we have already seen this state
@@ -67,7 +68,7 @@ class greedySearchSolver:
             #     continue
             # else:
             #     heapq.heappush(openedList, (best_neighbor.get_h(), best_neighbor))
-            #     closedList.add(best_neighbor)
+            #     closedList.add(best_nei ghbor)
             #     predecessors[best_neighbor] = current_board
             #     print("best neighbor")
             #     print(best_neighbor)
@@ -85,11 +86,13 @@ if __name__ == "__main__":
     # print(initial_state)
     # create a solver object
     solver = greedySearchSolver(initial_state)
-    solver.solve_greedy()
+    path=solver.solve_greedy()
+    for click in path:
+        print(click)
 
     moves= solver.get_moves()
 
-    for move in moves:
-        print(move)
+    # for move in moves:
+    #     print(move)
 
 
