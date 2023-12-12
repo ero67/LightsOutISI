@@ -2,12 +2,16 @@ import GameBoard
 import heapq
 import time
 
+
+
+
 class greedySearchSolver:
     def __init__(self, board):
         self.board = board
         self.moves = []
         self.solved = False
         self.closedList = set()
+        self.time = 0
     def solve_greedy(self):
         priority_queue = []
         initial_state = self.board
@@ -30,10 +34,13 @@ class greedySearchSolver:
         self.closedList.add(initial_state)
         predecessors = {}
         predecessors[initial_state] = None
+        start_time = time.time()
 
         while len(priority_queue) > 0:
             # poping the state with the lowest h from the priority queue with index 1 of a tuple bacause the first element is the h
             current_state = heapq.heappop(priority_queue)[1]
+            print("current state")
+            print(current_state)
             # print("this is priority queue")
             # for item in priority_queue:
             #     print(item)
@@ -61,7 +68,8 @@ class greedySearchSolver:
                 # break out of the loop
                 # print("solved")
                 # print(current_state)
-                print(current_state.get_path())
+                # print(current_state.get_path())
+                self.time = time.time() - start_time
                 break
             children = current_state.generate_children()
             for child in children:
@@ -83,17 +91,27 @@ class greedySearchSolver:
 
     def get_num_expanded_states(self):
         return len(self.closedList)
-
+    def get_time(self):
+        return self.time
 
 if __name__ == "__main__":
-    initial_state = GameBoard.GameBoard(5, 5,1)
+    initial_state = GameBoard.GameBoard(5, 5,4)
     # print(initial_state)
     # create a solver object
     solver = greedySearchSolver(initial_state)
     solver.solve_greedy()
     moves = solver.get_moves()
+
+    print("Greedy")
     print("Number of expanded states:")
     print(solver.get_num_expanded_states())
+    print("Number of moves:")
+    print(solver.get_num_moves())
+
+    print("Time:")
+    print(solver.get_time())
+
+
 
 
 

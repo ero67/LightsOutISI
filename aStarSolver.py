@@ -20,19 +20,19 @@ class LightsOutSolver_AStar:
     #             lowest_f=node
     #     return lowest_f
 
-    def lowest_f(self,openList):
-        # set the lowest_f to the first tuple in the list
-        lowest_f = openList[0]
-        # for each tuple in the list
-        for node in openList:
-            # get the f value from the first element of the tuple
-            f = node[0]
-            # if the f value is lower than the lowest_f value
-            if f < lowest_f[0]:
-                # set the lowest_f to the current tuple
-                lowest_f = node
-        # return the state from the third element of the lowest_f tuple
-        return lowest_f[2]
+    # def lowest_f(self,openList):
+    #     # set the lowest_f to the first tuple in the list
+    #     lowest_f = openList[0]
+    #     # for each tuple in the list
+    #     for node in openList:
+    #         # get the f value from the first element of the tuple
+    #         f = node[0]
+    #         # if the f value is lower than the lowest_f value
+    #         if f < lowest_f[0]:
+    #             # set the lowest_f to the current tuple
+    #             lowest_f = node
+    #     # return the state from the third element of the lowest_f tuple
+    #     return lowest_f[2]
 
     def get_actions(self, state):
         # create an empty list to store the actions

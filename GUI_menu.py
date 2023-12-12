@@ -31,15 +31,16 @@ play_button_menu = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((10, 3
 # dropdown menus for inital settings
 algorithms = ["DFS", "Greedy"]
 dropdown_menu_algorithms = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((10, 100), (100, 50)), options_list=algorithms, starting_option=algorithms[0], manager=menu_manager)
-selected_algorithm = algorithms[0]
+selected_algorithm = algorithms[1]
 
 sizes= ["2x3", "5x5"]
 dropdown_menu_sizes = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((10, 10), (100, 50)), options_list=sizes, starting_option=sizes[0], manager=menu_manager)
-size = sizes[0]
-rows=2
-cols=3
-boardindex=random.randint(0,4)
-
+size = sizes[1]
+rows=5
+cols=5
+# boardindex=random.randint(0,4)
+boardindex=4
+initial_board = GameBoard.GameBoard(rows, cols, boardindex)
 
 def draw_board(board,window):
     # window.fill(black)
@@ -53,8 +54,9 @@ def draw_board(board,window):
                 pygame.draw.rect(window, grey, (x, y, rect_width, rect_height))
     # moves_text = font.render(f"Moves:   ", True, white)
 
-
+draw_board(initial_board,menu_window)
 def showing_the_solving(rows,cols,boardindex,algorithm):
+    print(rows,cols,boardindex,algorithm)
     black = (0, 0, 0)
     white = (255, 255, 255)
     grey = (128, 128, 128)
@@ -175,6 +177,8 @@ while running:
                     size = dropdown_menu_sizes.selected_option
                     print(rows,cols)
                     print(boardindex)
+                    print(selected_algorithm)
+                    time.sleep(3)
                     showing_the_solving(rows,cols,boardindex,selected_algorithm)
                     running = False
             if event.user_type == pygame_gui.UI_DROP_DOWN_MENU_CHANGED:
@@ -189,12 +193,12 @@ while running:
                     if size == "2x3":
                         cols = 3
                         rows = 2
-                        boardindex=random.randint(0,4)
+                        # boardindex=random.randint(0,4)
                         print("2x3")
                     elif size == "5x5":
                         cols = 5
                         rows = 5
-                        boardindex=random.randint(0,4)
+                        # boardindex=random.randint(0,4)
                         print("5x5")
         menu_manager.process_events(event)
     menu_manager.update(time_delta)
