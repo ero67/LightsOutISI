@@ -16,24 +16,11 @@ class greedySearchSolver:
         priority_queue = []
         initial_state = self.board
         heapq.heappush(priority_queue, (initial_state.get_h(), initial_state))
-        # second_state=initial_state.copy()
-        # second_state.toggle_light(0,0)
-        # third_state=second_state.copy()
-        # third_state.toggle_light(2,2)
-        # heapq.heappush(priority_queue, (second_state.get_h(), second_state))
-        # heapq.heappush(priority_queue, (third_state.get_h(), third_state))
-        #
-        # popped= heapq.heappop(priority_queue)[1]
-        # print(popped)
-        # popped = heapq.heappop(priority_queue)[1]
-        # print(popped)
-        # popped = heapq.heappop(priority_queue)[1]
-        # print(popped)
-        moves = []
+        # moves = []
         # closedList = set()
         self.closedList.add(initial_state)
-        predecessors = {}
-        predecessors[initial_state] = None
+        parrents = {}
+        parrents[initial_state] = None
         start_time = time.time()
 
         while len(priority_queue) > 0:
@@ -41,29 +28,19 @@ class greedySearchSolver:
             current_state = heapq.heappop(priority_queue)[1]
             print("current state")
             print(current_state)
-            # print("this is priority queue")
-            # for item in priority_queue:
-            #     print(item)
-            # print("this is end of priority queue")
-            # print("this is closed list")
-            # for item in closedList:
-            #     print(item)
-            # print("this is end if the closed list")
-            # print("state with the lowest h in the queue")
-            # print(current_state)
+
             if current_state.is_solved():
                 self.solved = True
                 self.moves = []
                 self.moves.append(current_state)
                 # # set the current state to the predecessor of the current state
                 # print(current_state)
-                while predecessors[current_state] is not None:
+                while parrents[current_state] is not None:
                 #     # append the move that was made to get to the current state to the moves list
-                     self.moves.append(predecessors[current_state])
-                #     # set the current state to the predecessor of the current state
-                     current_state = predecessors[current_state]
-                # # reverse the moves list
-                #
+                     self.moves.append(parrents[current_state])
+                #     # set the current state to the parrent of the current state
+                     current_state = parrents[current_state]
+                # reverse the moves list
                 self.moves.reverse()
                 # break out of the loop
                 # print("solved")
@@ -80,14 +57,14 @@ class greedySearchSolver:
                     # print(child)
                     heapq.heappush(priority_queue, (child.get_h(), child))
                     self.closedList.add(child)
-                    predecessors[child] = current_state
+                    parrents[child] = current_state
 
             # time.sleep(3)
     def get_moves(self):
         return self.moves
 
     def get_num_moves(self):
-        return len(self.moves)
+        return len(self.moves)-1
 
     def get_num_expanded_states(self):
         return len(self.closedList)
@@ -95,7 +72,7 @@ class greedySearchSolver:
         return self.time
 
 if __name__ == "__main__":
-    initial_state = GameBoard.GameBoard(5, 5,4)
+    initial_state = GameBoard.GameBoard(2, 3,4)
     # print(initial_state)
     # create a solver object
     solver = greedySearchSolver(initial_state)
@@ -107,7 +84,7 @@ if __name__ == "__main__":
     print(solver.get_num_expanded_states())
     print("Number of moves:")
     print(solver.get_num_moves())
-
+    print(solver.solved)
     print("Time:")
     print(solver.get_time())
 

@@ -21,7 +21,7 @@ class LightsOutSolver_DFS:
 
         
         index_of_while=0
-        # while the stack is not empty
+
         while stack:
             # sleep(1)
             index_of_while+=1
@@ -67,11 +67,11 @@ class LightsOutSolver_DFS:
         return self.moves
 
     def get_num_moves(self):
-        return len(self.moves)
+        return len(self.moves)-1
 
     # def get_num_states(self):
     #     return len(self.moves) + 1
-    def get_um_expanded_states(self):
+    def get_num_expanded_states(self):
         return len(self.visited)
 
     def get_time(self):
@@ -88,7 +88,7 @@ class LightsOutSolver_DFS:
 # Testing the GameBoard class
 if __name__ == "__main__":
     # Create an instance of the GameBoard class
-    initial_board = GameBoard.GameBoard(5, 5,4)
+    initial_board = GameBoard.GameBoard(2, 3,4)
 
     # Print the initial state of the board
     print("Initial State:")
@@ -103,7 +103,7 @@ if __name__ == "__main__":
         print(move)
 
     print("Number of moves:", solver.get_num_moves())
-    print("Number of expanded states:", solver.get_um_expanded_states())
+    print("Number of expanded states:", solver.get_num_expanded_states())
     print(solver.solved)
     print("Time:")
     print(solver.get_time())

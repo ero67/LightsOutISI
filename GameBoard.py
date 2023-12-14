@@ -17,11 +17,11 @@ class GameBoard:
                 self.board=[[True,False,True],
                             [True,False,True]]
             elif self.boardindex==2:
+                self.board=[[False,True,False],
+                            [False,True,False]]
+            elif self.boardindex==3:
                 self.board=[[True,True,True],
                             [True,True,True]]
-            elif self.boardindex==3:
-                self.board=[[False,False,True],
-                            [False,True,True]]
             elif self.boardindex==4:
                 self.board=[[False,True,False],
                             [True,True,True]]
@@ -61,6 +61,12 @@ class GameBoard:
                             [True, True,False,True,True],
                             [False,True,False,True,True],
                             [False,True,False,False,True]]
+            # elif self.boardindex == 5:
+            #     self.board=[[False,True,False,False,True],
+            #                 [False, False,True, True, False],
+            #                 [True, True,False,False,False],
+            #                 [False,True,False,False,False],
+            #                 [True,False,False,False,True]]
         # if map_index==0:
         # self.board = [[True, True, False, True, True],
         #             [True, False, False, False, True],
