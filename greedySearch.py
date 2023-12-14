@@ -15,6 +15,8 @@ class greedySearchSolver:
     def solve_greedy(self):
         priority_queue = []
         initial_state = self.board
+
+        #pushing inital state with its heuristic to priority queue
         heapq.heappush(priority_queue, (initial_state.get_h(), initial_state))
         # moves = []
         # closedList = set()
@@ -33,8 +35,6 @@ class greedySearchSolver:
                 self.solved = True
                 self.moves = []
                 self.moves.append(current_state)
-                # # set the current state to the predecessor of the current state
-                # print(current_state)
                 while parrents[current_state] is not None:
                 #     # append the move that was made to get to the current state to the moves list
                      self.moves.append(parrents[current_state])
@@ -42,10 +42,8 @@ class greedySearchSolver:
                      current_state = parrents[current_state]
                 # reverse the moves list
                 self.moves.reverse()
-                # break out of the loop
-                # print("solved")
-                # print(current_state)
-                # print(current_state.get_path())
+
+                #get the final time of running the algorithm
                 self.time = time.time() - start_time
                 break
             children = current_state.generate_children()
