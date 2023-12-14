@@ -54,13 +54,11 @@ class LightsOutSolver_DFS:
                     # if the copy has not been visited, i had to create this method for checking if the state is in visited
                     #because it was not working with "not in"
                     if new_state.is_in_visited(self.visited) is False:
-                        # print("if new_state not in visited:")
-                        # print(new_state)
                         # push the copy to the stack
                         stack.append(new_state)
                         # add the copy to the visited set ... using tuple because i could not check if the board was already in the set
                         self.visited.add(tuple(map(tuple, new_state.board)))
-                        # set the predecessor of the copy to the current state
+                        # set the parrent of the copy to the current state
                         parrents[new_state] = current_state
 
     def get_moves(self):
