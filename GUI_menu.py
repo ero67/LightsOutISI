@@ -221,6 +221,8 @@ while running:
                         print("dfs")
                     elif selected_algorithm == "Greedy":
                         print("greedy")
+                    draw_board_initial_board(GameBoard.GameBoard(rows, cols, boardindex), menu_window)
+
                 elif event.ui_element == dropdown_menu_sizes:
                     size = dropdown_menu_sizes.selected_option
                     if size == "2x3":
@@ -233,6 +235,8 @@ while running:
                         rows = 5
                         # boardindex=random.randint(0,4)
                         print("5x5")
+                    draw_board_initial_board(GameBoard.GameBoard(rows, cols, boardindex), menu_window)
+
                 elif event.ui_element == dropdown_menu_boardindexes:
                     boardindex_string = dropdown_menu_boardindexes.selected_option
                     if boardindex_string == "0":
