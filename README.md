@@ -5,6 +5,6 @@ Program for visualizing algorithms for solving Lights Out game.
 - Greedy search
 - A*
 
-#How ?
+## How ?
 Implemented in Python. Visualized with PyGame.
   
